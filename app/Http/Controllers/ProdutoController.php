@@ -12,14 +12,14 @@ class ProdutoController extends Controller
     public function index()
     {
         $produtos = Produto::with(['tipoProduto', 'fornecedor'])->get();
-        return view('index', compact('produtos'));
+        return view('produtos.index', compact('produtos'));
     }
 
     public function create()
     {
         $tipos = TipoProduto::all();
         $fornecedores = Fornecedor::all();
-        return view('create', compact('tipos', 'fornecedores'));
+        return view('produtos.create', compact('tipos', 'fornecedores'));
     }
 
     public function store(Request $request)
@@ -33,20 +33,20 @@ class ProdutoController extends Controller
 
         Produto::create($request->all());
 
-        return redirect()->route('index')->with('success', 'Produto criado com sucesso!');
+        return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso!');
     }
 
     public function show(Produto $produto)
     {
         $produto->load(['tipoProduto', 'fornecedor']);
-        return view('show', compact('produto'));
+        return view('produtos.show', compact('produto'));
     }
 
     public function edit(Produto $produto)
     {
         $tipos = TipoProduto::all();
         $fornecedores = Fornecedor::all();
-        return view('edit', compact('produto', 'tipos', 'fornecedores'));
+        return view('produtos.edit', compact('produto', 'tipos', 'fornecedores'));
     }
 
     public function update(Request $request, Produto $produto)
@@ -60,12 +60,12 @@ class ProdutoController extends Controller
 
         $produto->update($request->all());
 
-        return redirect()->route('index')->with('success', 'Produto atualizado com sucesso!');
+        return redirect()->route('produtos.index')->with('success', 'Produto atualizado com sucesso!');
     }
 
     public function destroy(Produto $produto)
     {
         $produto->delete();
-        return redirect()->route('index')->with('success', 'Produto excluído com sucesso!');
+        return redirect()->route('produtos.index')->with('success', 'Produto excluído com sucesso!');
     }
 }

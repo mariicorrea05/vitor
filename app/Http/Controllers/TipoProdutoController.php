@@ -7,59 +7,42 @@ use Illuminate\Http\Request;
 
 class TipoProdutoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $tipos = TipoProduto::all();
+        return view('tipo_produtos.index', compact('tipos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('tipo_produtos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        TipoProduto::create($request->all());
+        return redirect()->route('tipo_produtos.index')->with('success', 'Tipo de produto criado com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(TipoProduto $tipoProduto)
     {
-        //
+        return view('tipo_produtos.show', compact('tipoProduto'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(TipoProduto $tipoProduto)
     {
-        //
+        return view('tipo_produtos.edit', compact('tipoProduto'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, TipoProduto $tipoProduto)
     {
-        //
+        $tipoProduto->update($request->all());
+        return redirect()->route('tipo_produtos.index')->with('success', 'Tipo de produto atualizado com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(TipoProduto $tipoProduto)
     {
-        //
+        $tipoProduto->delete();
+        return redirect()->route('tipo_produtos.index')->with('success', 'Tipo de produto excluído com sucesso.');
     }
 }
