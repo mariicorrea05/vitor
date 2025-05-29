@@ -42,6 +42,14 @@ class FornecedorController extends Controller
 
     public function destroy(Fornecedor $fornecedor)
     {
+        try {
+            // Verifica se o fornecedor está sendo usado por algum produto
+            if ($fornecedor->produtos()->count() > 0) {
+                return redirect()->route('fornecedores.index')->with('error', 'Fornecedor não pode ser excluído, pois está associado a um ou mais produtos.');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('fornecedores.index')->with('error', 'Erro ao excluir fornecedor: ' . $e->getMessage());
+        }
         $fornecedor->delete();
         return redirect()->route('fornecedores.index')->with('success', 'Fornecedor excluído com sucesso.');
     }

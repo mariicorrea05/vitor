@@ -85,18 +85,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="observacoes" class="font-weight-bold">
-                            <i class="fas fa-sticky-note mr-1"></i>Observações
-                        </label>
-                        <textarea class="form-control @error('observacoes') is-invalid @enderror" 
-                                  id="observacoes" name="observacoes" rows="3"
-                                  placeholder="Informações adicionais sobre o produto">{{ old('observacoes') }}</textarea>
-                        @error('observacoes')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     <div class="d-flex justify-content-between align-items-center mt-4">
                         <a href="{{ route('produtos.index') }}" class="btn btn-outline-secondary">
                             <i class="fas fa-times mr-1"></i> Cancelar

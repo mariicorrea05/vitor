@@ -42,6 +42,14 @@ class TipoProdutoController extends Controller
 
     public function destroy(TipoProduto $tipoProduto)
     {
+        try {
+            // Verifica se o tipo de produto está sendo usado por algum produto
+            if ($tipoProduto->produtos()->count() > 0) {
+                return redirect()->route('tipo_produtos.index')->with('error', 'Tipo de produto não pode ser excluído, pois está associado a um ou mais produtos.');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('tipo_produtos.index')->with('error', 'Erro ao excluir tipo de produto: ' . $e->getMessage());
+        }
         $tipoProduto->delete();
         return redirect()->route('tipo_produtos.index')->with('success', 'Tipo de produto excluído com sucesso.');
     }

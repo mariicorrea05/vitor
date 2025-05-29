@@ -1,61 +1,172 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Projeto Laravel – Sistema de Cadastro (CRUD)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 Projeto
 
-## About Laravel
+Este projeto é um **sistema de gerenciamento simples** com interface web para cadastro e controle de:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Produtos**
+- **Tipos de Produtos**
+- **Fornecedores**
+- **Clientes**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+O objetivo é demonstrar a criação de uma aplicação web completa usando **Laravel**, o principal framework PHP do mercado, com **padrões MVC (Model-View-Controller)**, **migrations**, **rotas RESTful** e **views Blade**.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🧱 Estrutura do Projeto
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 📁 Models
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Representam as tabelas do banco de dados e contêm a lógica de acesso aos dados:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- `Produto`: id, nome, preco, tipo_produto_id, fornecedor_id
+- `Fornecedor`: id, nome, email, telefone
+- `Cliente`: id, nome, email, telefone
+- `TipoProduto`: id, nome
 
-## Laravel Sponsors
+### 📁 Migrations
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Scripts para criar as tabelas no banco. Exemplo:
 
-### Premium Partners
+```php
+Schema::create('fornecedores', function (Blueprint $table) {
+    $table->id();
+    $table->string('nome');
+    $table->string('email')->nullable();
+    $table->string('telefone')->nullable();
+    $table->timestamps();
+});
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 📁 Controllers
 
-## Contributing
+Contêm a lógica da aplicação:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- `ProdutoController`
+- `FornecedorController`
+- `ClienteController`
+- `TipoProdutoController`
 
-## Code of Conduct
+Cada controller implementa os métodos padrão:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- `index()` → listar registros
+- `create()` → formulário de criação
+- `store()` → salvar novo registro
+- `edit()` → editar registro
+- `update()` → atualizar no banco
+- `destroy()` → excluir
+- `show()` → visualizar detalhes
 
-## Security Vulnerabilities
+### 📁 Views
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Usamos Blade (`resources/views/`), o sistema de templates do Laravel. Criamos pastas e arquivos como:
 
-## License
+- `produtos/index.blade.php`
+- `fornecedores/create.blade.php`
+- `clientes/edit.blade.php`
+- etc.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 📁 Routes
+
+As rotas são registradas em `routes/web.php` usando `Route::resource()`:
+
+```php
+Route::resource('produtos', ProdutoController::class);
+```
+
+---
+
+## 🛠️ Requisitos para Executar o Projeto
+
+### ✅ Softwares Necessários
+
+1. **PHP 8.1+**
+2. **Composer** (gerenciador de dependências PHP)
+3. **MySQL** ou **MariaDB**
+4. **Laravel** (instalado via Composer)
+5. **Servidor local** (XAMPP, Laragon, ou usar `php artisan serve`)
+
+---
+
+## ▶️ Como Executar o Projeto
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/seu-usuario/seu-projeto.git
+cd seu-projeto
+```
+
+### 2. Instale as dependências
+
+```bash
+composer install
+```
+
+### 3. Crie o arquivo `.env`
+
+```bash
+cp .env.example .env
+```
+
+Configure as variáveis de ambiente:
+
+```dotenv
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 4. Rode as migrations
+
+```bash
+php artisan migrate
+```
+
+### 5. Inicie o servidor
+
+```bash
+php artisan serve
+```
+
+Acesse via navegador:
+
+```
+http://127.0.0.1:8000/produtos
+```
+
+---
+
+## 💡 Como Funciona
+
+- O usuário acessa via navegador.
+- Laravel resolve a rota e chama o Controller correspondente.
+- O Controller acessa os dados com o Model.
+- A View é renderizada com Blade.
+- O resultado aparece para o usuário com formulários, botões, listas etc.
+
+---
+
+## 🧠 Conceitos Aprendidos
+
+- Padrão **MVC**
+- Migrations e **mapeamento de tabelas**
+- **Rotas RESTful**
+- **Blade Templating**
+- **CRUD completo**
+- **Relacionamentos** entre entidades (`belongsTo`, `hasMany`)
+- Boas práticas de organização em Laravel
+
+---
+
+## ✅ Resultado Final
+
+Um sistema funcional com cadastro de:
+
+- Produtos vinculados a um tipo e fornecedor
+- Gerenciamento separado de fornecedores, clientes e tipos de produto
+- Interface simples para CRUD
+- Facilidade de extensão para relatórios, filtros, autenticação, etc.
